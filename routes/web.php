@@ -25,24 +25,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::prefix('admin')->group(function (){
+    Route::prefix('user')->group(function (){
+        Route::match(['POST','GET'],'', [UserController::class, 'index']);
+    });
+    Route::prefix('barang')->group(function (){
+        Route::match(['POST','GET'],'', [BarangController::class, 'index']);
 
-Route::get('/admin', function () {
-    return view('login.user');
+    });
 });
 
-
-Route::get('/admin/user', function () {
-    return view('admin.user');
-});
 
 Route::get('/admin', [UserController::class, 'index']);
 Route::get('/admin/beranda', [BerandaController::class, 'index']);
-Route::get('/admin/user', [UserController::class, 'index']);
 Route::get('/admin/tipe', [TipeController::class, 'index']);
 Route::get('/admin/laporan', [LaporanController::class, 'index']);
 Route::get('/admin/harga', [HargaController::class, 'index']);
 Route::get('/admin/klinik', [KlinikController::class, 'index']);
-Route::get('/admin/barang', [BarangController::class, 'index']);
 Route::get('/admin/transaksi', [TransaksiController::class, 'index']);
 Route::get('/admin/transaksi/cetak/{id}', [TransaksiController::class, 'cetakLaporan']);
 Route::get('/admin/laporanpesanan', [LaporanPesananController::class, 'index']);

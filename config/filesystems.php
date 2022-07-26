@@ -64,7 +64,12 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
         ],
-
+        'imageBarang' => [
+            'driver'     => 'local',
+            'root'       => public_path().'/images/barang',
+            'url'        => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
     ],
 
     /*

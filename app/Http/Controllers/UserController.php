@@ -2,28 +2,71 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string
      */
     public function index()
     {
-        return view('admin.user', ['sidebar' => 'user']);
+        if (\request()->isMethod('POST')){
+            return $this->create();
+        }
+        $user = User::all();
+        return view('admin.user', ['sidebar' => 'user', 'user' => $user]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return array|string
      */
     public function create()
     {
         //
+        $field = \request()->validate(
+            [
+                'nama'     => 'required',
+                'username' => 'required',
+                'password' => 'required|confirmed',
+                'role'     => 'required',
+                'no_hp'     => 'required',
+                'alamat'     => 'required',
+            ]
+        );
+
+        if (\request('id')){
+            $cekUsername = User::where([['username', '=', \request('username')], ['id', '!=', \request('id')]])->first();
+            if ($cekUsername) {
+                return \request()->validate(
+                    [
+                        'username' => 'required|string|unique:users,username',
+                    ]
+                );
+            }
+            if (strpos($field['password'], '*') === false) {
+                $password = Hash::make($field['password']);
+                Arr::set($field, 'password', $password);
+            }
+            $user = User::find(\request('id'));
+            $user->update($field);
+        }else{
+            \request()->validate(
+                [
+                    'username' => 'required|string|unique:users,username',
+                ]
+            );
+            $user     = new User();
+            $password = Hash::make($field['password']);
+            Arr::set($field, 'password', $password);
+            $user->create($field);
+        }
+
+        return 'berhasil';
     }
 
     /**
