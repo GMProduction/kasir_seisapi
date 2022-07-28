@@ -85,6 +85,7 @@
                             <option selected>Pilih Role</option>
                             <option value="admin">Admin</option>
                             <option value="pimpinan">Pimpinan</option>
+                            <option value="kasir">Kasir</option>
                         </select>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control textForm" id="username" name="username" placeholder="Jhony">

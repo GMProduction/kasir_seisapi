@@ -24,31 +24,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)->group(
+    function () {
+        Route::match(['POST', 'GET'], '', [UserController::class, 'index']);
+        Route::prefix('barang')->group(
+            function () {
+                Route::match(['POST', 'GET'], '', [BarangController::class, 'index']);
+            }
+        );
+        Route::prefix('laporan')->group(
+            function () {
+                Route::get('', [LaporanController::class, 'index']);
+                Route::get('{id}', [LaporanController::class, 'detail']);
+            }
+        );
+        Route::get('cetak', [TransaksiController::class, 'cetakLaporan']);
 
-Route::prefix('admin')->group(function (){
-    Route::prefix('user')->group(function (){
-        Route::match(['POST','GET'],'', [UserController::class, 'index']);
-    });
-    Route::prefix('barang')->group(function (){
-        Route::match(['POST','GET'],'', [BarangController::class, 'index']);
+    }
+);
 
-    });
-});
-
-
-Route::get('/admin', [UserController::class, 'index']);
-Route::get('/admin/beranda', [BerandaController::class, 'index']);
-Route::get('/admin/tipe', [TipeController::class, 'index']);
-Route::get('/admin/laporan', [LaporanController::class, 'index']);
-Route::get('/admin/harga', [HargaController::class, 'index']);
-Route::get('/admin/klinik', [KlinikController::class, 'index']);
-Route::get('/admin/transaksi', [TransaksiController::class, 'index']);
-Route::get('/admin/transaksi/cetak/{id}', [TransaksiController::class, 'cetakLaporan']);
-Route::get('/admin/laporanpesanan', [LaporanPesananController::class, 'index']);
-Route::get('/admin/masterbarang', [MasterBarangController::class, 'index']);
-Route::get('/admin/masterpelanggan', [MasterPelangganController::class, 'index']);
-
-Route::get('/', [LoginController::class, 'index']);
-Route::get('/login', [LoginController::class, 'index']);
-Route::get('/daftar', [DaftarController::class, 'index']);
-Route::post('/daftar', [DaftarController::class, 'store']);
+Route::match(['POST','GET'],'/', [LoginController::class, 'index'])->name('login')->middleware('guest');
+Route::get('logout', [LoginController::class, 'logout'])->middleware('auth');

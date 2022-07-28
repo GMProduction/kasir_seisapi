@@ -47,10 +47,9 @@
             </a>
 
             <ul class="dropdown-menu custom" aria-labelledby="dropdownprofile">
-                <li><a class="dropdown-item disabled" href="#">pradanamahendra@gmail.com</a></li>
+                <li><a class="dropdown-item disabled" href="#">{{auth()->user()->nama}}</a></li>
                 <hr>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <li><a class="dropdown-item" href="/logout">Logout</a></li>
             </ul>
 
         </div>
@@ -99,7 +98,7 @@
                 </li> --}}
 
                 <li class="nav-item">
-                    <a class="nav-link menu @if ($sidebar == 'user') active @endif" href="/admin/user">
+                    <a class="nav-link menu @if ($sidebar == 'user') active @endif" href="/admin">
                         <i class="material-icons menu-icon">person</i>
                         <p class="menu-text">User</p>
                     </a>
