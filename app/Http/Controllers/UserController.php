@@ -32,12 +32,14 @@ class UserController extends Controller
             [
                 'nama'     => 'required',
                 'username' => 'required',
-                'password' => 'required|confirmed',
                 'role'     => 'required',
                 'no_hp'     => 'required',
                 'alamat'     => 'required',
             ]
         );
+        $fieldPassword = \request()->validate([
+            'password' => 'required|confirmed',
+        ]);
 
         if (\request('id')){
             $cekUsername = User::where([['username', '=', \request('username')], ['id', '!=', \request('id')]])->first();
@@ -48,8 +50,8 @@ class UserController extends Controller
                     ]
                 );
             }
-            if (strpos($field['password'], '*') === false) {
-                $password = Hash::make($field['password']);
+            if (strpos($fieldPassword['password'], '*') === false) {
+                $password = Hash::make($fieldPassword['password']);
                 Arr::set($field, 'password', $password);
             }
             $user = User::find(\request('id'));
@@ -61,7 +63,7 @@ class UserController extends Controller
                 ]
             );
             $user     = new User();
-            $password = Hash::make($field['password']);
+            $password = Hash::make($fieldPassword['password']);
             Arr::set($field, 'password', $password);
             $user->create($field);
         }
