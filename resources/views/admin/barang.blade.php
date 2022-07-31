@@ -1,7 +1,6 @@
 @extends('admin.base')
 
 @section('content')
-
     <div class="row">
         <div class="col-12">
             <div class="panel">
@@ -16,33 +15,34 @@
                     <div class="table">
                         <table id="table_barang" class="table table-striped" style="width:100%">
                             <thead>
-                            <tr>
-                                <th>Nama Barang</th>
-                                <th>Foto</th>
-                                <th>Harga</th>
-                                <th>Action</th>
-                            </tr>
+                                <tr>
+                                    <th>Nama Barang</th>
+                                    <th>Foto</th>
+                                    <th>Harga</th>
+                                    <th>Action</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @forelse($data as $d)
-                                <tr>
-                                    <td>{{$d->nama}}</td>
-                                    <td><img class="" src="{{ asset($d->image) }}"/></td>
-                                    <td>{{number_format($d->harga,'0')}}</td>
-                                    <td class="">
-                                        <div class="d-flex">
-                                            <a class="btn-success sml rnd me-1" data-row="{{$d}}" id="editData">Edit <i
-                                                    class="material-icons menu-icon ms-2">edit</i></a>
-                                            <a class="btn-accent sml rnd ">Hapus<i
-                                                    class="material-icons menu-icon ms-2">note_add</i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="4" class="text-center">Tidak ada data</td>
-                                </tr>
-                            @endforelse
+                                @forelse($data as $d)
+                                    <tr>
+                                        <td>{{ $d->nama }}</td>
+                                        <td><img class="" src="{{ asset($d->image) }}" /></td>
+                                        <td>{{ number_format($d->harga, '0') }}</td>
+                                        <td class="">
+                                            <div class="d-flex">
+                                                <a class="btn-success sml rnd me-1" data-row="{{ $d }}"
+                                                    id="editData">Edit <i
+                                                        class="material-icons menu-icon ms-2">edit</i></a>
+                                                <a class="btn-accent sml rnd ">Hapus<i
+                                                        class="material-icons menu-icon ms-2">note_add</i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="text-center">Tidak ada data</td>
+                                    </tr>
+                                @endforelse
 
 
                             </tbody>
@@ -59,8 +59,7 @@
 
 
     <!-- Modal TAMBAH BARANG-->
-    <div class="modal fade" id="modaltambahbarang" tabindex="-1" aria-labelledby="modaltambahbarang"
-         aria-hidden="true">
+    <div class="modal fade" id="modaltambahbarang" tabindex="-1" aria-labelledby="modaltambahbarang" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -69,22 +68,22 @@
                 </div>
                 <form id="form" onsubmit="return createData()" enctype="multipart/form-data">
                     @csrf
-                    <input id="id" name="id">
+                    <input id="id" name="id" hidden/>
                     <div class="modal-body">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control textForm" id="nama" name="nama"
-                                   placeholder="namabarang">
+                                placeholder="namabarang">
                             <label for="namabarang" class="form-label">Nama Barang</label>
                         </div>
 
                         <div class="form-floating mb-3">
                             <input type="number" class="form-control textForm" id="harga" name="harga"
-                                   placeholder="harga">
+                                placeholder="harga">
                             <label for="harga" class="form-label">Harga</label>
                         </div>
 
                         <div class="mb-3">
-                            <label for="fotobarang" class="form-label" >Foto Barang</label>
+                            <label for="fotobarang" class="form-label">Foto Barang</label>
                             <input class="form-control" type="file" id="image" name="image">
                         </div>
                     </div>
@@ -116,17 +115,20 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="date" class="form-control" id="tanggalmasuk" name="Tanggal Masuk" placeholder="tanggalmasuk">
+                        <input type="date" class="form-control" id="tanggalmasuk" name="Tanggal Masuk"
+                            placeholder="tanggalmasuk">
                         <label for="tanggalmasuk" class="form-label">Tanggal Masuk</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="date" class="form-control" id="tanggalexpired" name="Tanggal Masuk" placeholder="tanggalexpired">
+                        <input type="date" class="form-control" id="tanggalexpired" name="Tanggal Masuk"
+                            placeholder="tanggalexpired">
                         <label for="tanggalexpired" class="form-label">Tanggal Expired</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="keterangan" name="keterangan" placeholder="keterangan">
+                        <input type="text" class="form-control" id="keterangan" name="keterangan"
+                            placeholder="keterangan">
                         <label for="keterangan" class="form-label">Keterangan</label>
                     </div>
 
@@ -151,18 +153,18 @@
     <script src="{{ asset('js/number_formater.js') }}"></script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#table_id').DataTable();
             $('#table_barang').DataTable();
             $('#table_stock').DataTable();
             $('.datepicker').datepicker();
         });
 
-        $(document).on('click', '#addData, #editData', function () {
+        $(document).on('click', '#addData, #editData', function() {
             let row = $(this).data('row');
             $('.textForm').val('');
             if (row) {
-                $.each(row, function (v, k) {
+                $.each(row, function(v, k) {
                     $('#' + v).val(row[v])
                 })
             }
@@ -175,5 +177,3 @@
         }
     </script>
 @endsection
-
-
