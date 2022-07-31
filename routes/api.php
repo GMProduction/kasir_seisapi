@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('barangs',[\App\Http\Controllers\API\BarangController::class,'index']);
+    Route::get('profile',[\App\Http\Controllers\API\ProfileController::class,'index']);
     Route::prefix('cart')->group(function (){
        Route::match(['POST','GET'], '', [\App\Http\Controllers\API\KeranjangController::class, 'index']);
        Route::post('checkout', [\App\Http\Controllers\API\KeranjangController::class, 'checkout']);
