@@ -61,7 +61,7 @@
                 </div>
                 <form id="form" onsubmit="return createData()">
                     @csrf
-                    <input id="id" name="id" hidden/>
+                    <input id="id" name="id" hidden class="textForm"/>
                     <div class="modal-body">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control textForm" id="nama" name="nama" placeholder="Jhony">
