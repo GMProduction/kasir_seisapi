@@ -1,9 +1,6 @@
 @extends('admin.base')
 
 @section('content')
-    <div>
-
-
 
         <div class="row">
             <div class="col-6">
@@ -14,17 +11,17 @@
                         <div class="d-flex ">
                             <div class="form-floating  me-2">
                                 <input type="date" class="form-control" id="tanggalawal" name="tanggalawal"
-                                    placeholder="tanggalawal">
+                                       placeholder="tanggalawal">
                                 <label for="tanggalawal" class="form-label">Tanggal Awal</label>
                             </div>
 
                             <div class="form-floating  me-2">
                                 <input type="date" class="form-control" id="tanggalakhir" name="tanggalakhir"
-                                    placeholder="tanggalakhir">
+                                       placeholder="tanggalakhir">
                                 <label for="tanggalakhir" class="form-label">Tanggal Akhir</label>
                             </div>
-
-                            <a class="btn-utama" href="/admin/transaksi/cetak/1" target="_blank">Cetak</a>
+                            <a class="btn-utama" id="btnTanggal">Tampil</a>
+                            <a class="btn-utama" id="btnCetak" target="_blank">Cetak</a>
                         </div>
                         {{-- <a class="btn-utama-soft sml rnd " data-bs-toggle="modal" data-bs-target="#modaltambahnegara">Data
                             Negara Baru
@@ -35,33 +32,26 @@
                         <div class="table">
                             <table id="table_pesanan" class="table table-striped enselect" style="width:100%">
                                 <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nomor Transaksi</th>
-                                        <th>Tanggal & Jam</th>
-                                        <th>Total</th>
-                                        <th>Kasir</th>
-                                    </tr>
+                                <tr>
+                                    <th>Nomor Transaksi</th>
+                                    <th>Tanggal & Jam</th>
+                                    <th>Total</th>
+                                    <th>Kasir</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>#0001</td>
-                                        <td>13 Juli 2022 14:00</td>
-                                        <td>70.000</td>
-                                        <td>Joni</td>
-
+                                @forelse($data as $d)
+                                    <tr id="{{$d->id}}">
+                                        <td>{{$d->no_transaksi}}</td>
+                                        <td>{{date_format($d->created_at,'Y M d')}}</td>
+                                        <td>{{number_format($d->total)}}</td>
+                                        <td>{{$d->user->nama}}</td>
                                     </tr>
-
-                                    <tr>
-                                        <td>2</td>
-                                        <td>#0002</td>
-                                        <td>13 Juli 2022 15:00</td>
-                                        <td>70.000</td>
-                                        <td>Joni</td>
-
+                                @empty
+                                    <tr >
+                                        <td colspan="5" class="text-center">Tidak ada data</td>
                                     </tr>
-
+                                @endforelse
                                 </tbody>
 
                             </table>
@@ -74,7 +64,7 @@
             <div class="col-6">
                 <div class="panel">
                     <div class="title">
-                        <p>Barang yang dibeli (nomor transaksi)</p>
+                        <p>Barang yang dibeli ( <span id="noTrans"></span> )</p>
                         {{-- <a class="btn-utama-soft sml rnd " data-bs-toggle="modal" data-bs-target="#modaltambahnegara">Data
                             Negara Baru
                             <i class="material-icons menu-icon ms-2">add_circle</i></a> --}}
@@ -84,33 +74,17 @@
                         <div class="table">
                             <table id="table_keranjang" class="table table-striped enselect" style="width:100%">
                                 <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Barang</th>
-                                        <th>Jumlah</th>
-                                        <th>Harga</th>
-                                        <th>Total</th>
-                                        <th>Action</th>
-                                    </tr>
+                                <tr>
+                                    <th class="text-center">No</th>
+                                    <th class="text-center">Nama Barang</th>
+                                    <th class="text-center">Jumlah</th>
+                                    <th class="text-center">Harga</th>
+                                    <th class="text-center">Total</th>
+{{--                                    <th>Action</th>--}}
+                                </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Nasi Goreng Sei</td>
-                                        <td>2</td>
-                                        <td>20.000</td>
-                                        <td>40.000</td>
+                                <tbody id="tbCart">
 
-                                    </tr>
-
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Mie Goreng Sei</td>
-                                        <td>2</td>
-                                        <td>15.000</td>
-                                        <td>30.000</td>
-
-                                    </tr>
 
                                 </tbody>
 
@@ -121,25 +95,80 @@
                 </div>
             </div>
         </div>
-    @endsection
+        @endsection
 
-    @section('morejs')
-        <script src="{{ asset('js/number_formater.js') }}"></script>
+        @section('morejs')
+            <script src="{{ asset('js/number_formater.js') }}"></script>
 
-        <script>
-            $(document).ready(function() {
-                $('#table_pesanan').DataTable({
-                    select: {
-                        style: 'single'
-                    }
+
+            <script>
+                var tableTrans;
+                $(document).ready(function () {
+                    $('#tanggalawal').val('{{request('start')}}');
+                    $('#tanggalakhir').val('{{request('end')}}');
+                    tableTrans = $('#table_pesanan').DataTable({
+                        select: {
+                            style: 'single'
+                        }
+                    });
+
+                    // $('#table_keranjang').DataTable();
                 });
 
-                $('#table_keranjang').DataTable();
-            });
-        </script>
-    @endsection
+                $('#table_pesanan tbody').on('click', 'tr', function () {
+                    let data = tableTrans.row(this).data();
+                    let row = data.DT_RowId;
+                    let total = data[2];
+                    $('#noTrans').html(data[0]);
+                    $.get(window.location.pathname+'/'+row, function (response) {
+                        let table = $('#tbCart');
+                        table.empty();
+                        $.each(response, function (k, v) {
+                            table.append(' ' +
+                                '<tr>\n' +
+                                '     <td>'+parseInt(k+1)+'</td>\n' +
+                                '     <td>'+v.barangs.nama+'</td>\n' +
+                                '     <td class="text-center">'+v.qty+'</td>\n' +
+                                '     <td style="text-align: right">'+(v.harga).toLocaleString()+'</td>\n' +
+                                '     <td style="text-align: right">'+(v.total).toLocaleString()+'</td>\n' +
+                                ' </tr>')
+                        })
+                        table.append(' ' +
+                            '<tr>\n' +
+                            '     <td colspan="4" class="text-center" style="font-weight: bold">Total Harga</td>\n' +
+                            '     <td style="font-weight: bold; text-align: right">'+(total).toLocaleString()+'</td>\n' +
+                            ' </tr>')
+                    })
+                });
 
 
-    </body>
+                $(document).on('click','#btnTanggal', function () {
+                    let awal = $('#tanggalawal').val();
+                    let akhir = $('#tanggalakhir').val();
+                    let form = {
+                        awal,
+                        akhir
+                    }
+                    if(awal && akhir){
+                        window.location = window.location.pathname+'?start='+awal+'&end='+akhir;
+                    }
+                })
 
-    </html>
+                $(document).on('click','#btnCetak', function () {
+                    let awal = $('#tanggalawal').val();
+                    let akhir = $('#tanggalakhir').val();
+                    let form = {
+                        awal,
+                        akhir
+                    }
+                    if(awal && akhir) {
+                        $(this).attr('href', '/admin/cetak?start=' + awal + '&end=' + akhir).attr('target', '_black');
+                    }
+                })
+            </script>
+            @endsection
+
+
+            </body>
+
+            </html>

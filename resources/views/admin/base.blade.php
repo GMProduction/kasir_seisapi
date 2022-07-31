@@ -17,7 +17,7 @@
 
     {{-- ICON --}}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ asset('datatable/datatables.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('vitalets-bootstrap-datepicker/css/datepicker.css') }}" />
 
 </head>
@@ -47,10 +47,9 @@
             </a>
 
             <ul class="dropdown-menu custom" aria-labelledby="dropdownprofile">
-                <li><a class="dropdown-item disabled" href="#">pradanamahendra@gmail.com</a></li>
+                <li><a class="dropdown-item disabled" href="#">{{auth()->user()->nama}}</a></li>
                 <hr>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <li><a class="dropdown-item" href="/logout">Logout</a></li>
             </ul>
 
         </div>
@@ -99,7 +98,7 @@
                 </li> --}}
 
                 <li class="nav-item">
-                    <a class="nav-link menu @if ($sidebar == 'user') active @endif" href="/admin/user">
+                    <a class="nav-link menu @if ($sidebar == 'user') active @endif" href="/admin">
                         <i class="material-icons menu-icon">person</i>
                         <p class="menu-text">User</p>
                     </a>
@@ -138,7 +137,10 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
     <script src="{{ asset('js/base.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('datatable/datatables.min.js') }}"></script>
+    <script src="{{ asset('js/swal.js') }}"></script>
+    <script src="{{ asset('js/dialog.js') }}"></script>
+    <script src="{{ asset('js/moment.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="{{ asset('datatable/select.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('vitalets-bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
 

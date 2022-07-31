@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
 class TransaksiController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        return view('admin.transaksi', ['sidebar' => 'transaksi']);
+        $trans = Transaksi::with('user')->get();
+        return view('admin.transaksi', ['sidebar' => 'transaksi', 'data' => $trans]);
     }
 
     /**
@@ -90,17 +91,26 @@ class TransaksiController extends Controller
     //     return $pdf->stream();
     // }
 
-    public function cetakLaporan($id)
+    public function cetakLaporan()
     {
-//        return $this->dataTransaksi();
-        $pdf = App::make('dompdf.wrapper');
-        $pdf->loadHTML($this->dataTransaksi())->setPaper('f4', 'potrait');
 
-        return $pdf->stream();
+        return $this->dataTransaksi();
+//        $pdf = App::make('dompdf.wrapper');
+//        $pdf->loadHTML($this->dataTransaksi())->setPaper('f4', 'potrait');
+//
+//        return $pdf->stream();
     }
 
     public function dataTransaksi()
     {
-        return view('admin/laporanpesanan')->with("");
+
+        $trans = Transaksi::with(['user','cart.barangs']);
+        $start = \request('start');
+        $end = \request('end');
+        if (\request('start')){
+            $trans = $trans->whereBetween('created_at', ["$start 00:00:00", "$end 23:59:59"]);
+        }
+        $trans = $trans->get();
+        return view('admin/laporanpesanan',['data' => $trans]);
     }
 }

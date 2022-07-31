@@ -2,34 +2,63 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\CustomController;
+use App\Models\Barang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
-class BarangController extends Controller
+class BarangController extends CustomController
 {
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string
      */
     public function index()
     {
-        return view('admin.barang', ['sidebar' => 'barang']);
+        if (\request()->isMethod('POST')){
+            return $this->create();
+        }
+        $data = Barang::all();
+
+        return view('admin.barang', ['sidebar' => 'barang', 'data' => $data]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function create()
     {
         //
+        $field = \request()->validate(
+            [
+                'nama'  => 'required',
+                'harga' => 'required',
+            ]
+        );
+        $foto = \request('image');
+
+        if ($foto) {
+            $image     = $this->generateImageName('image');
+            $stringImg = '/images/barang/'.$image;
+            $this->uploadImage('image', $image, 'imageBarang');
+            Arr::set($field, 'image', $stringImg);
+        }
+        if (\request('id')) {
+            $barang = Barang::find(\request('id'));
+            $barang->update($field);
+        } else {
+            $barang = new Barang();
+            $barang->create($field);
+        }
+
+        return 'berhasil';
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -40,7 +69,8 @@ class BarangController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -51,7 +81,8 @@ class BarangController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -62,8 +93,9 @@ class BarangController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -74,7 +106,8 @@ class BarangController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
