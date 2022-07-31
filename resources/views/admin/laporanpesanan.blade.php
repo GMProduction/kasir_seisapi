@@ -139,8 +139,9 @@
 
     <div>
         <h4 style=" text-align: center;margin-bottom:5px ;margin-top:0">LAPORAN PEMBELIAN</h4>
-        <h5 style=" text-align: center;margin-bottom:10px ;margin-top:0">Periode tanggal_awal s/d tanggal_ahkir</h4>
-
+        @if(request('start'))
+        <h5 style=" text-align: center;margin-bottom:10px ;margin-top:0">Periode {{date_format(DateTime::createFromFormat('Y-m-d',request('start')), 'd M Y')}} s/d {{date_format(DateTime::createFromFormat('Y-m-d',request('end')), 'd M Y')}}</h5>
+        @endif
 
     </div>
 
@@ -161,30 +162,31 @@
         @forelse($data as $key => $d)
 
             <tr>
-                <td rowspan="{{count($d->cart) > 0 ? 2 : 1}}">{{$key+1}}</td>
+{{--                <td rowspan="{{count($d->cart) > 0 ? 2 : 1}}">{{$key+1}}</td>--}}
+                <td>{{$key+1}}</td>
                 <td>{{$d->no_transaksi}}</td>
-                <td>{{date_format($d->created_at,'Y M d')}}</td>
+                <td>{{date_format($d->created_at,'Y M d H:i:s')}}</td>
                 <td>{{number_format($d->total)}}</td>
                 <td>{{$d->user->nama}}</td>
             </tr>
-            @if(count($d->cart) > 0)
-                <tr>
-                    <td></td>
-                    <td colspan="2">
-                        <table>
-                            @foreach($d->cart as $c)
-                                <tr>
-                                    <td>{{$c->barangs->nama}}</td>
-                                    <td>{{$c->qty}}</td>
-                                    <td>{{$c->harga}}</td>
-                                    <td>{{$c->total}}</td>
-                                </tr>
-                            @endforeach
+{{--            @if(count($d->cart) > 0)--}}
+{{--                <tr>--}}
+{{--                    <td></td>--}}
+{{--                    <td colspan="2">--}}
+{{--                        <table>--}}
+{{--                            @foreach($d->cart as $c)--}}
+{{--                                <tr>--}}
+{{--                                    <td>{{$c->barangs->nama}}</td>--}}
+{{--                                    <td>{{$c->qty}}</td>--}}
+{{--                                    <td>{{$c->harga}}</td>--}}
+{{--                                    <td>{{$c->total}}</td>--}}
+{{--                                </tr>--}}
+{{--                            @endforeach--}}
 
-                        </table>
-                    </td>
-                </tr>
-            @endif
+{{--                        </table>--}}
+{{--                    </td>--}}
+{{--                </tr>--}}
+{{--            @endif--}}
         @empty
             <tr>
                 <td colspan="5" class="text-center">Tidak ada data</td>

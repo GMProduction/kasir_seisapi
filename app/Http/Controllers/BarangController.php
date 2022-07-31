@@ -33,6 +33,7 @@ class BarangController extends CustomController
             [
                 'nama'  => 'required',
                 'harga' => 'required',
+                'kategori' => 'required'
             ]
         );
         $foto = \request('image');
