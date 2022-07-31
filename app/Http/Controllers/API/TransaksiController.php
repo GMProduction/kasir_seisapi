@@ -18,7 +18,7 @@ class TransaksiController extends Controller
     }
 
     public function detail($id){
-        $trans = Transaksi::with('cart')->find($id);
+        $trans = Transaksi::with('cart.barangs')->find($id);
         return $trans;
     }
 

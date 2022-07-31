@@ -15,6 +15,31 @@
                     <div class="table">
                         <table id="table_barang" class="table table-striped" style="width:100%">
                             <thead>
+                            <tr>
+                                <th>Nama Barang</th>
+                                <th>Kategori</th>
+                                <th>Foto</th>
+                                <th>Harga</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @forelse($data as $d)
+                                <tr>
+                                    <td>{{$d->nama}}</td>
+                                    <td>{{$d->kategori}}</td>
+                                    <td><img class="" src="{{ asset($d->image) }}"/></td>
+                                    <td>{{number_format($d->harga,'0')}}</td>
+                                    <td class="">
+                                        <div class="d-flex">
+                                            <a class="btn-success sml rnd me-1" data-row="{{$d}}" id="editData">Edit <i
+                                                    class="material-icons menu-icon ms-2">edit</i></a>
+                                            <a class="btn-accent sml rnd ">Hapus<i
+                                                    class="material-icons menu-icon ms-2">note_add</i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
                                 <tr>
                                     <th>Nama Barang</th>
                                     <th>Foto</th>
@@ -68,14 +93,20 @@
                 </div>
                 <form id="form" onsubmit="return createData()" enctype="multipart/form-data">
                     @csrf
-                    <input id="id" name="id" hidden/>
+                    <input id="id" name="id" class="textForm" hidden>
                     <div class="modal-body">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control textForm" id="nama" name="nama"
                                 placeholder="namabarang">
                             <label for="namabarang" class="form-label">Nama Barang</label>
                         </div>
-
+                        <label for="role" class="form-label">Kategori</label>
+                        <select class="form-select mb-3 textForm" aria-label="Default select example" id="kategori" name="kategori" required>
+                            <option value="" selected>Pilih Kategori</option>
+                            <option value="Makanan">Makanan</option>
+                            <option value="Minuman">Minuman</option>
+                            <option value="Snack">Snack</option>
+                        </select>
                         <div class="form-floating mb-3">
                             <input type="number" class="form-control textForm" id="harga" name="harga"
                                 placeholder="harga">
@@ -162,10 +193,13 @@
 
         $(document).on('click', '#addData, #editData', function() {
             let row = $(this).data('row');
+            console.log(row)
             $('.textForm').val('');
             if (row) {
-                $.each(row, function(v, k) {
-                    $('#' + v).val(row[v])
+                $.each(row, function (v, k) {
+                    if (v != 'image'){
+                        $('#' + v).val(row[v])
+                    }
                 })
             }
             $('#modaltambahbarang').modal('show');

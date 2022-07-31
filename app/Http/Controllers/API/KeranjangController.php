@@ -17,7 +17,7 @@ class KeranjangController
             return $this->create();
         }
 
-        $cart = Keranjang::where('user_id', '=', auth()->id())->get();
+        $cart = Keranjang::with('barangs')->where('user_id', '=', auth()->id())->get();
 
         return $cart;
     }
