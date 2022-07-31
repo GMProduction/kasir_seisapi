@@ -9,9 +9,19 @@ class Barang extends Model
 {
     use HasFactory;
     protected $fillable = [
-      'nama',
-      'image',
-      'harga',
-      'kategori'
+        'nama',
+        'image',
+        'harga',
+        'kategori',
     ];
+
+    public function scopeFilter($query, $filter)
+    {
+        $query->when(
+            $filter ?? false,
+            function ($q, $filter) {
+                return $q->where('kategori', $filter);
+            }
+        );
+    }
 }

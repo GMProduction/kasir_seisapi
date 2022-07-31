@@ -8,7 +8,8 @@ use App\Models\Barang;
 class BarangController extends Controller
 {
     public function index(){
-        return Barang::all();
+        $kategori = request('q');
+        return Barang::filter($kategori)->get();
     }
 
 }
