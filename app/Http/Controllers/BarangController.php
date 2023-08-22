@@ -57,7 +57,13 @@ class BarangController extends CustomController
 
         if (request()->has('image')) {
             $file = request()->file('image');
-            $this->saveImage($image, $file, $destinationPath, $oldImg);
+
+            $file->move($destinationPath, $image);
+            if ($oldImg) {
+                if (file_exists(public_path() . null)) {
+                    unlink(public_path() . null);
+                }
+            }
         }
 
 
