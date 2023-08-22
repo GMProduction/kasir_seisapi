@@ -35,8 +35,9 @@
                                                 <a class="btn-success sml rnd me-1" data-row="{{ $d }}"
                                                     id="editData">Edit <i
                                                         class="material-icons menu-icon ms-2">edit</i></a>
-                                                <a class="btn-accent sml rnd ">Hapus<i
-                                                        class="material-icons menu-icon ms-2">note_add</i></a>
+                                                <a class="btn-accent sml rnd "
+                                                    onclick="hapus('{{ $d->id }}', '{{ $d->nama }}') ">Hapus<i
+                                                        class="material-icons menu-icon ms-2">delete</i></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -185,6 +186,11 @@
 
         function createData() {
             saveData('Simpan Data', 'form', window.location.pathname)
+            return false;
+        }
+
+        function hapus(id, name) {
+            deleteData(name, window.location.pathname + '/' + id + '/delete')
             return false;
         }
     </script>

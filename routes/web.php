@@ -30,6 +30,7 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
         Route::prefix('barang')->group(
             function () {
                 Route::match(['POST', 'GET'], '', [BarangController::class, 'index']);
+                Route::get('{id}/delete', [BarangController::class, 'delete']);
             }
         );
         Route::prefix('laporan')->group(
@@ -39,9 +40,8 @@ Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)-
             }
         );
         Route::get('cetak', [TransaksiController::class, 'cetakLaporan']);
-
     }
 );
 
-Route::match(['POST','GET'],'/', [LoginController::class, 'index'])->name('login')->middleware('guest');
+Route::match(['POST', 'GET'], '/', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::get('logout', [LoginController::class, 'logout'])->middleware('auth');

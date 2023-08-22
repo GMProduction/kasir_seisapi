@@ -134,4 +134,10 @@ class BarangController extends CustomController
             }
         }
     }
+
+    public function delete($id)
+    {
+        Barang::destroy($id);
+        return response()->json('berhasil');
+    }
 }
