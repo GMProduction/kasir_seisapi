@@ -41,13 +41,13 @@
         </p>
 
         <div class="header-panel-kanan">
-            <a class="profil dropdown-toggle" href="#" role="button" id="dropdownprofile" data-bs-toggle="dropdown"
-                aria-expanded="false">
+            <a class="profil dropdown-toggle" href="#" role="button" id="dropdownprofile"
+                data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="{{ asset('images/local/nobody.png') }}" />
             </a>
 
             <ul class="dropdown-menu custom" aria-labelledby="dropdownprofile">
-                <li><a class="dropdown-item disabled" href="#">{{auth()->user()->nama}}</a></li>
+                <li><a class="dropdown-item disabled" href="#">{{ auth()->user()->nama }}</a></li>
                 <hr>
                 <li><a class="dropdown-item" href="/logout">Logout</a></li>
             </ul>
@@ -134,7 +134,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
     <script src="{{ asset('js/base.js') }}"></script>
     <script src="{{ asset('js/swal.js') }}"></script>
