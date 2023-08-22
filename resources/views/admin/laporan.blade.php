@@ -19,7 +19,7 @@
                                 placeholder="tanggalakhir">
                             <label for="tanggalakhir" class="form-label">Tanggal Akhir</label>
                         </div>
-                        <a class="btn-utama mr-2" id="btnTanggal">Tampil</a>
+                        <a class="btn-utama mr-2" style="margin-right: 20px" id="btnTanggal">Tampil</a>
                         <a class="btn-utama" id="btnCetak" target="_blank">Cetak</a>
                     </div>
                     {{-- <a class="btn-utama-soft sml rnd " data-bs-toggle="modal" data-bs-target="#modaltambahnegara">Data
@@ -138,7 +138,7 @@
                     '<tr>\n' +
                     '     <td colspan="4" class="text-center" style="font-weight: bold">Total Harga</td>\n' +
                     '     <td style="font-weight: bold; text-align: right">' + (total)
-                .toLocaleString() + '</td>\n' +
+                    .toLocaleString() + '</td>\n' +
                     ' </tr>')
             })
         });
