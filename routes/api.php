@@ -22,7 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::group(['prefix' => 'profile'], function () {
-        Route::get('/', [\App\Http\Controllers\Api\ProfilController::class, 'index']);
+        Route::get('/', [\App\Http\Controllers\API\ProfilController::class, 'index']);
     });
 
     Route::get('barangs', [\App\Http\Controllers\API\BarangController::class, 'index']);
