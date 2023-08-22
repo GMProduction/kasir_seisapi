@@ -29,30 +29,36 @@ class BarangController extends CustomController
     public function create()
     {
         //
-        $field = \request()->validate(
+        $field = request()->validate(
             [
                 'nama'  => 'required',
                 'harga' => 'required',
                 'kategori' => 'required'
             ]
         );
-        $foto = \request('image');
 
-        if ($foto) {
-            $image     = $this->generateImageName('image');
-            $stringImg = '/images/barang/' . $image;
-            $this->uploadImage('image', $image, 'imageBarang');
-            Arr::set($field, 'image', $stringImg);
+        $data            = Barang::find(request('id'));
+        $oldImg          = null;
+        $imageName       = $this->generateImageName('image');
+        $destinationPath = public_path() . '/images/barang/';
+        $field           = request()->all();
 
-            $file = request()->file('image');
-            $file->move(public_path('/images/barang/'), $image);
+        if (request()->has('image')) {
+            $field['gambar'] = '/images/barang/' . $imageName;
         }
-        if (\request('id')) {
-            $barang = Barang::find(\request('id'));
-            $barang->update($field);
+
+        if ($data) {
+            $oldImg = $data->image;
+            $data->update($field);
+            $text = 'Berhasil edit data';
         } else {
-            $barang = new Barang();
-            $barang->create($field);
+            Barang::create($field);
+            $text = 'Berhasil simpan data';
+        }
+
+        if (request()->has('image')) {
+            $file = request()->file('image');
+            $this->saveImage($imageName, $file, $destinationPath, $oldImg);
         }
 
         return 'berhasil';
@@ -116,6 +122,16 @@ class BarangController extends CustomController
      */
     public function destroy($id)
     {
-        //
+    }
+
+
+    public function saveImage($fileName, $file, $destinationPath, $old = null)
+    {
+        $file->move($destinationPath, $fileName);
+        if ($old) {
+            if (file_exists(public_path() . $old)) {
+                unlink(public_path() . $old);
+            }
+        }
     }
 }
