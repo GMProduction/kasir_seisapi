@@ -9,14 +9,6 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        try {
-            $id = auth()->id();
-            $data = User::with([])
-                ->where('id', '=', $id)
-                ->first();
-            return $this->jsonResponse('success', 200, $data);
-        } catch (\Exception $e) {
-            return $this->jsonResponse('terjadi kesalahan server (' . $e->getMessage() . ')', 500);
-        }
+        return User::find(auth()->id());
     }
 }
