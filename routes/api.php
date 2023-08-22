@@ -18,6 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['prefix' => 'profile'], function () {
+    Route::get('/', [\App\Http\Controllers\Api\ProfilController::class, 'index']);
+});
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('barangs', [\App\Http\Controllers\API\BarangController::class, 'index']);
