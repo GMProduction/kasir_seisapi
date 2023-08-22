@@ -15,7 +15,7 @@ class BarangController extends CustomController
      */
     public function index()
     {
-        if (\request()->isMethod('POST')){
+        if (\request()->isMethod('POST')) {
             return $this->create();
         }
         $data = Barang::all();
@@ -40,9 +40,12 @@ class BarangController extends CustomController
 
         if ($foto) {
             $image     = $this->generateImageName('image');
-            $stringImg = '/images/barang/'.$image;
-            $this->uploadImage('image', $image, 'imageBarang');
-            Arr::set($field, 'image', $stringImg);
+            $stringImg = '/images/barang/' . $image;
+            $oldImg          = null;
+            // $this->uploadImage('image', $image, 'imageBarang');
+            // Arr::set($field, 'image', $stringImg);
+
+            $destinationPath = public_path() . '/assets/images/paket';
         }
         if (\request('id')) {
             $barang = Barang::find(\request('id'));
@@ -51,6 +54,12 @@ class BarangController extends CustomController
             $barang = new Barang();
             $barang->create($field);
         }
+
+        if (request()->has('image')) {
+            $file = request()->file('image');
+            $this->saveImage($image, $file, $destinationPath, $oldImg);
+        }
+
 
         return 'berhasil';
     }
