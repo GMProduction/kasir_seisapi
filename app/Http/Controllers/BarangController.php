@@ -41,11 +41,11 @@ class BarangController extends CustomController
         if ($foto) {
             $image     = $this->generateImageName('image');
             $stringImg = '/images/barang/' . $image;
-            $oldImg          = null;
-            // $this->uploadImage('image', $image, 'imageBarang');
-            // Arr::set($field, 'image', $stringImg);
+            $this->uploadImage('image', $image, 'imageBarang');
+            Arr::set($field, 'image', $stringImg);
 
-            $destinationPath = public_path() . '/images/barang';
+            $file = request()->file('image');
+            $file->move(public_path('/images/barang/'), $image);
         }
         if (\request('id')) {
             $barang = Barang::find(\request('id'));
@@ -54,18 +54,6 @@ class BarangController extends CustomController
             $barang = new Barang();
             $barang->create($field);
         }
-
-        if (request()->has('image')) {
-            $file = request()->file('image');
-
-            $file->move($destinationPath, $image);
-            if ($oldImg) {
-                if (file_exists(public_path() . null)) {
-                    unlink(public_path() . null);
-                }
-            }
-        }
-
 
         return 'berhasil';
     }
