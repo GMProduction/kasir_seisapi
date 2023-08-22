@@ -45,7 +45,7 @@ class BarangController extends CustomController
             // $this->uploadImage('image', $image, 'imageBarang');
             // Arr::set($field, 'image', $stringImg);
 
-            $destinationPath = public_path() . '/assets/images/paket';
+            $destinationPath = public_path() . '/images/barang';
         }
         if (\request('id')) {
             $barang = Barang::find(\request('id'));
