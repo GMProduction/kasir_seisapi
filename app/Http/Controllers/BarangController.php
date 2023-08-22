@@ -33,7 +33,7 @@ class BarangController extends CustomController
             [
                 'nama'  => 'required',
                 'harga' => 'required',
-                'kategori' => 'required'
+                'kategori' => 'required',
             ]
         );
 
@@ -44,7 +44,7 @@ class BarangController extends CustomController
         $field           = request()->all();
 
         if (request()->has('image')) {
-            $field['gambar'] = '/images/barang/' . $imageName;
+            $field['image'] = '/images/barang/' . $imageName;
         }
 
         if ($data) {
