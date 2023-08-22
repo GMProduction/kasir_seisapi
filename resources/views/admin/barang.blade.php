@@ -5,9 +5,9 @@
         <div class="col-12">
             <div class="panel">
                 <div class="title">
-                    <p>Data Barang</p>
+                    <p>Data Menu</p>
                     <a class="btn-utama-soft  rnd " id="addData">Tambah
-                        Barang
+                        Menu
                         <i class="material-icons menu-icon ms-2">add_circle</i></a>
                 </div>
 
@@ -16,7 +16,7 @@
                         <table id="table_barang" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Nama Barang</th>
+                                    <th>Nama Menu</th>
                                     <th>Kategori</th>
                                     <th>Foto</th>
                                     <th>Harga</th>
@@ -61,12 +61,12 @@
     </div>
 
 
-    <!-- Modal TAMBAH BARANG-->
+    <!-- Modal TAMBAH Menu-->
     <div class="modal fade" id="modaltambahbarang" tabindex="-1" aria-labelledby="modaltambahbarang" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="titlemodaltambahbarang">Tambah Master Barang</h5>
+                    <h5 class="modal-title" id="titlemodaltambahbarang">Tambah Master Menu</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form id="form" onsubmit="return createData()" enctype="multipart/form-data">
@@ -76,7 +76,7 @@
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control textForm" id="nama" name="nama"
                                 placeholder="namabarang">
-                            <label for="namabarang" class="form-label">Nama Barang</label>
+                            <label for="namabarang" class="form-label">Nama Menu</label>
                         </div>
                         <label for="role" class="form-label">Kategori</label>
                         <select class="form-select mb-3 textForm" aria-label="Default select example" id="kategori"
@@ -93,7 +93,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="fotobarang" class="form-label">Foto Barang</label>
+                            <label for="fotobarang" class="form-label">Foto Menu</label>
                             <input class="form-control" type="file" id="image" name="image">
                         </div>
                     </div>
@@ -113,7 +113,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="titlemodaltambahstock">Tambah Stock (Nama Barang)</h5>
+                    <h5 class="modal-title" id="titlemodaltambahstock">Tambah Stock (Nama Menu)</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

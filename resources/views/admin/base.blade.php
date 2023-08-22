@@ -32,7 +32,7 @@
             </a>
 
             <p class="title">
-                Nama Perusahaan
+                Se'i Sapi
             </p>
         </div>
 
