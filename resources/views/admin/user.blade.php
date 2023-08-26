@@ -11,7 +11,7 @@
         </div>
 
         <div class="isi">
-            <div class="table">
+            <div class="table  table-responsive">
                 <table id="table_piutang" class="table table-striped" style="width:100%">
                     <thead>
                     <tr>

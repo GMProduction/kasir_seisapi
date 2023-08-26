@@ -4,10 +4,9 @@
     <div class="row">
         <div class="col-6">
             <div class="panel">
-                <div class="title">
-                    <p>Laporan Pembelian</p>
-
-                    <div class="d-flex ">
+                <div class="title" style="flex-direction: column">
+                    <p>Laporan Penjualan</p>
+                    <div class="d-flex flex-column flex-md-row gap-2">
                         <div class="form-floating  me-2">
                             <input type="date" class="form-control" id="tanggalawal" name="tanggalawal"
                                 placeholder="tanggalawal">
@@ -19,16 +18,19 @@
                                 placeholder="tanggalakhir">
                             <label for="tanggalakhir" class="form-label">Tanggal Akhir</label>
                         </div>
-                        <a class="btn-utama mr-2" style="margin-right: 20px" id="btnTanggal">Tampil</a>
-                        <a class="btn-utama" id="btnCetak" target="_blank">Cetak</a>
+
                     </div>
+                  <div class="d-flex mt-2">
+                      <a class="btn-utama w-full" style="margin-right: 20px" id="btnTanggal">Tampil</a>
+                      <a class="btn-utama w-full" id="btnCetak" target="_blank">Cetak</a>
+                  </div>
                     {{-- <a class="btn-utama-soft sml rnd " data-bs-toggle="modal" data-bs-target="#modaltambahnegara">Data
                         Negara Baru
                         <i class="material-icons menu-icon ms-2">add_circle</i></a> --}}
                 </div>
 
                 <div class="isi">
-                    <div class="table">
+                    <div class="table table-responsive">
                         <table id="table_pesanan" class="table table-striped enselect" style="width:100%">
                             <thead>
                                 <tr>
@@ -70,7 +72,7 @@
                 </div>
 
                 <div class="isi">
-                    <div class="table">
+                    <div class="table  table-responsive">
                         <table id="table_keranjang" class="table table-striped enselect" style="width:100%">
                             <thead>
                                 <tr>

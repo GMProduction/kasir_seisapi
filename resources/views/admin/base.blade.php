@@ -32,12 +32,12 @@
             </a>
 
             <p class="title">
-                Se'i Sapi
+                Sei Sapi Surakarta
             </p>
         </div>
 
         <p class="text-title text-center">
-            Beranda
+{{--            Beranda--}}
         </p>
 
         <div class="header-panel-kanan">

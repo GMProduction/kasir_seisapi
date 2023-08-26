@@ -138,7 +138,7 @@
     {{-- <img src="{{ public_path('static-image/logo.png') }}" style="width: 120px; float: left;" /> --}}
 
     <div>
-        <h4 style=" text-align: center;margin-bottom:5px ;margin-top:0">LAPORAN PEMBELIAN</h4>
+            <h4 style=" text-align: center;margin-bottom:5px ;margin-top:0">LAPORAN PENJUALAN</h4>
         @if(request('start'))
         <h5 style=" text-align: center;margin-bottom:10px ;margin-top:0">Periode {{date_format(DateTime::createFromFormat('Y-m-d',request('start')), 'd M Y')}} s/d {{date_format(DateTime::createFromFormat('Y-m-d',request('end')), 'd M Y')}}</h5>
         @endif
