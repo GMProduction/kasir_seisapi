@@ -20,8 +20,11 @@
                         </div>
 
                     </div>
-                  <div class="d-flex mt-2">
-                      <a class="btn-utama w-full" style="margin-right: 20px" id="btnTanggal">Tampil</a>
+                  <div class="d-flex mt-1 gap-2" style="justify-content: space-between">
+                      <div class="d-flex gap-2">
+                          <a class="btn-utama w-full" style="" id="btnTanggal">Tampil</a>
+                          <a class="btn-danger w-full" style="" id="btnTanggal" href="/admin/laporan">Clear</a>
+                      </div>
                       <a class="btn-utama w-full" id="btnCetak" target="_blank">Cetak</a>
                   </div>
                     {{-- <a class="btn-utama-soft sml rnd " data-bs-toggle="modal" data-bs-target="#modaltambahnegara">Data
